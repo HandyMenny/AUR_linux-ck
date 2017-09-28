@@ -37,6 +37,9 @@ _localmodcfg=
 # a new kernel is released, but again, convenient for package bumps.
 _use_current=
 
+# Do not build linux-ck-headers
+_no_headers=
+
 ### Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-ck
@@ -236,6 +239,9 @@ _package() {
 }
 
 _package-headers() {
+if [ -n "$_no_headers" ]; then
+  echo "NO HEADERS"
+else
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   #_Hpkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   #pkgdesc="${_Hpkgdesc}"
@@ -373,9 +379,15 @@ _package-headers() {
   rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/kbuild/Kconfig.recursion-issue-01"
   rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/kbuild/Kconfig.recursion-issue-02"
   rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/kbuild/Kconfig.select-break"
+fi
 }
 
-pkgname=("${pkgbase}" "${pkgbase}-headers")
+if [ -n "$_no_headers" ]; then
+    pkgname=("${pkgbase}")
+else
+  pkgname=("${pkgbase}" "${pkgbase}-headers")
+fi
+
 for _p in ${pkgname[@]}; do
   eval "package_${_p}() {
     $(declare -f "_package${_p#${pkgbase}}")
