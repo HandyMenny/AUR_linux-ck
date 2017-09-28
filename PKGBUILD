@@ -7,7 +7,7 @@
 # Set these variables to ANYTHING that is not null to enable them
 
 # Tweak kernel options prior to a build via nconfig
-_makenconfig=
+_makenconfig=y
 
 # NUMA is optimized for multi-socket motherboards. A single multi-core CPU can
 # actually run slower with NUMA enabled. Most users will want to set this option
@@ -38,7 +38,7 @@ _localmodcfg=
 _use_current=
 
 # Do not build linux-ck-headers
-_no_headers=
+_no_headers=y
 
 ### Do no edit below this line unless you know what you're doing
 
