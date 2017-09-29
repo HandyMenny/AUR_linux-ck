@@ -66,6 +66,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '90-linux.hook'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
+        'patches/AMD-bobcat-with-march-native.patch'
+        'patches/Fix-the-key-to-turn-backlight-off.patch'
         )
 sha256sums=('a45c3becd4d08ce411c14628a949d08e2433d8cdeca92036c7013980e93858ab'
             'SKIP'
@@ -75,7 +77,9 @@ sha256sums=('a45c3becd4d08ce411c14628a949d08e2433d8cdeca92036c7013980e93858ab'
             '0f3e4930c3a603cc99fffa9fcac0f2cf7c58fc14a7ef8557345358c0bcd2bf66'
             'SKIP'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
-            'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65')
+            'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
+            '59c62a9730fbdd3a0bd82694a3f07d420acc9a37841a2830b87699640de37504'
+            '4bee67cb771eaa471c45d95f8687850ab5d59955c303c9c22ab5fa58ce7e21e2')
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
@@ -98,6 +102,12 @@ prepare() {
   # Patch source to unlock additional gcc CPU optimizatons
   # https://github.com/graysky2/kernel_gcc_patch
   patch -Np1 -i "${srcdir}/${_gcc_patch}"
+
+  # Patch source to compile for AMD bobcat using march=native
+  patch -Np1 -i "${srcdir}/patches/AMD-bobcat-with-march-native.patch"
+
+  # Patch source to workaround Fn+F7 issue on Asus eepc 1215B
+  patch -Np1 -i "${srcdir}/patches/Fix-the-key-to-turn-backlight-off.patch"
 
   # Clean tree and copy ARCH config over
   make mrproper

@@ -1,0 +1,65 @@
+From fc62e46f54faca95997b9a2a66cfe1a083e9edea Mon Sep 17 00:00:00 2001
+Message-Id: <fc62e46f54faca95997b9a2a66cfe1a083e9edea.1506691986.git.handymenny@outlook.com>
+From: Andrea Mennillo <handymenny@outlook.com>
+Date: Fri, 29 Sep 2017 15:28:43 +0200
+Subject: [PATCH] x86/Kconfig/cpus: Build for AMD bobcat with march native
+
+Config MNATIVE requires dependences not needed by
+amd bobcat processors.
+---
+ arch/x86/Kconfig.cpu    | 8 ++++++++
+ arch/x86/Makefile        | 5 ++++-
+ arch/x86/Makefile_32.cpu | 2 ++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/Kconfig.cpu b/arch/x86/Kconfig.cpu
+index aecb337..618147a 100644
+--- a/arch/x86/Kconfig.cpu
++++ b/arch/x86/Kconfig.cpu
+@@ -200,6 +200,14 @@ config MBOBCAT
+ 
+ 	  Enables -march=btver1
+ 
++config MBOBCAT-NATIVE
++	bool "AMD Bobcat with march native"
++	depends on MBOBCAT
++	---help---
++	  Select this for AMD Family 14h Bobcat processors.
++
++	  Enables -march=native
++
+ config MJAGUAR
+ 	bool "AMD Jaguar"
+ 	---help---
+diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+index fa4fba3..ece00cd 100644
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -109,7 +109,10 @@ else
+         cflags-$(CONFIG_MK8SSE3) += $(call cc-option,-march=k8-sse3,-mtune=k8)
+         cflags-$(CONFIG_MK10) += $(call cc-option,-march=amdfam10)
+         cflags-$(CONFIG_MBARCELONA) += $(call cc-option,-march=barcelona)
+-        cflags-$(CONFIG_MBOBCAT) += $(call cc-option,-march=btver1)
++	ifneq($(CONFIG_MBOBCAT-NATIVE),y)
++		cflags-$(CONFIG_MBOBCAT)	+= $(call cc-option,-march=btver1)
++	else
++		cflags-$(CONFIG_MBOBCAT)	+= $(call cc-option,-march=native)
+         cflags-$(CONFIG_MJAGUAR) += $(call cc-option,-march=btver2)
+         cflags-$(CONFIG_MBULLDOZER) += $(call cc-option,-march=bdver1)
+         cflags-$(CONFIG_MPILEDRIVER) += $(call cc-option,-march=bdver2)
+diff --git a/arch/x86/Makefile_32.cpu b/arch/x86/Makefile_32.cpu
+index 0b3b50a..9b0366f 100644
+--- a/arch/x86/Makefile_32.cpu
++++ b/arch/x86/Makefile_32.cpu
+@@ -30,6 +30,8 @@ cflags-$(CONFIG_MK10)	+= $(call cc-option,-march=amdfam10,-march=athlon)
+ cflags-$(CONFIG_MBARCELONA)	+= $(call cc-option,-march=barcelona,-march=athlon)
+ ifneq($(CONFIG_MBOBCAT-NATIVE),y)
+ cflags-$(CONFIG_MBOBCAT)	+= $(call cc-option,-march=btver1,-march=athlon)
++else
++cflags-$(CONFIG_MBOBCAT)	+= $(call cc-option,-march=native)
+ cflags-$(CONFIG_MJAGUAR)	+= $(call cc-option,-march=btver2,-march=athlon)
+ cflags-$(CONFIG_MBULLDOZER)	+= $(call cc-option,-march=bdver1,-march=athlon)
+ cflags-$(CONFIG_MPILEDRIVER)	+= $(call cc-option,-march=bdver2,-march=athlon)
+-- 
+2.14.2
+

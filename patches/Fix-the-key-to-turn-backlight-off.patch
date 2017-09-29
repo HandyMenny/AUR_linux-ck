@@ -1,0 +1,33 @@
+From cc94e678ce9295a0a0add266e98c6b47f2b668bc Mon Sep 17 00:00:00 2001
+Message-Id: <cc94e678ce9295a0a0add266e98c6b47f2b668bc.1506694696.git.handymenny@outlook.com>
+From: Andrea Mennillo <handymenny@outlook.com>
+Date: Fri, 29 Sep 2017 16:18:04 +0200
+Subject: [PATCH] platform/x86/eeepc-wmi: Hack, fix the key to turn backlight
+ off
+
+The special key Fn+F7 on my Asys eeepc 1215B is not working, this driver
+maps it to KEY_DISPLAY_TOOGLE, whose wmi event seem to be ignored,
+workaround this issue mapping it to KEY_PROG1 so it could be associated
+to the right function by the users.
+
+However, if eeepc-wmi driver is not loaded, Fn+F7 works as it should.
+---
+ eeepc-wmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/platform/x86/eeepc-wmi.c b/drivers/platform/x86/eeepc-wmi.c
+index 17b365f..693ae49 100644
+--- a/drivers/platform/x86/eeepc-wmi.c
++++ b/drivers/platform/x86/eeepc-wmi.c
+@@ -81,7 +81,7 @@ static const struct key_entry eeepc_wmi_keymap[] = {
+ 	{ KE_KEY, 0xe1, { KEY_F14 } }, /* Change Resolution */
+ 	{ KE_KEY, HOME_PRESS, { KEY_CONFIG } }, /* Home/Express gate key */
+ 	{ KE_KEY, 0xe8, { KEY_SCREENLOCK } },
+-	{ KE_KEY, 0xe9, { KEY_DISPLAYTOGGLE } },
++	{ KE_KEY, 0xe9, { KEY_PROG1 } },
+ 	{ KE_KEY, 0xeb, { KEY_CAMERA_ZOOMOUT } },
+ 	{ KE_KEY, 0xec, { KEY_CAMERA_UP } },
+ 	{ KE_KEY, 0xed, { KEY_CAMERA_DOWN } },
+-- 
+2.14.2
+
