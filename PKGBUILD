@@ -66,8 +66,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '90-linux.hook'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
-        'patches/AMD-bobcat-with-march-native.patch'
-        'patches/Fix-the-key-to-turn-backlight-off.patch'
+        'AMD-bobcat-with-march-native.patch'
+        'Fix-the-key-to-turn-backlight-off.patch'
         )
 sha256sums=('a45c3becd4d08ce411c14628a949d08e2433d8cdeca92036c7013980e93858ab'
             'SKIP'
@@ -104,10 +104,10 @@ prepare() {
   patch -Np1 -i "${srcdir}/${_gcc_patch}"
 
   # Patch source to compile for AMD bobcat using march=native
-  patch -Np1 -i "${srcdir}/patches/AMD-bobcat-with-march-native.patch"
+  patch -Np1 -i "${srcdir}/AMD-bobcat-with-march-native.patch"
 
   # Patch source to workaround Fn+F7 issue on Asus eepc 1215B
-  patch -Np1 -i "${srcdir}/patches/Fix-the-key-to-turn-backlight-off.patch"
+  patch -Np1 -i "${srcdir}/Fix-the-key-to-turn-backlight-off.patch"
 
   # Clean tree and copy ARCH config over
   make mrproper
