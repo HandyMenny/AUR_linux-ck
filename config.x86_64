@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 4.12.13-1 Kernel Configuration
+# Linux/x86 4.12.14-1 Kernel Configuration
 #
 CONFIG_64BIT=y
 CONFIG_X86_64=y
@@ -434,6 +434,7 @@ CONFIG_NO_BOOTMEM=y
 # CONFIG_MK10 is not set
 # CONFIG_MBARCELONA is not set
 CONFIG_MBOBCAT=y
+CONFIG_MBOBCAT_NATIVE=y
 # CONFIG_MJAGUAR is not set
 # CONFIG_MBULLDOZER is not set
 # CONFIG_MPILEDRIVER is not set
