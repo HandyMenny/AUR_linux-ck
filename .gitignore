@@ -4,5 +4,7 @@
 *.gz
 *.bak
 *.last
+enable_additional*.patch
+0*.patch
 src/
 pkg/
