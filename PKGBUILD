@@ -39,11 +39,11 @@ _use_current=
 # Do not build linux-ck-headers
 _no_headers=y
 
-### Do no edit below this line unless you know what you're doing
+### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-ck
 _srcname=linux-4.13
-pkgver=4.13.9
+pkgver=4.13.10
 pkgrel=1
 _ckpatchversion=1
 arch=('x86_64')
@@ -71,10 +71,10 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         )
 sha256sums=('2db3d6066c3ad93eb25b973a3d2951e022a7e975ee2fa7cbe5bddf84d9a49a2c'
             'SKIP'
-            '22156e82467c7911d226a0a887eba19103434efc104439a3b426a3fa551fb8f2'
+            'b9efa9c6375f79f6a041a5f0666d4ced1a49bfe8c4662d26517a6b4cfd9bf2f6'
             'SKIP'
             'a44bf7af8cec88aeb1159ecb4a0395bc214eb98fe6c0c398d38475e63b280fe8'
-             '8b00041911e67654b0bd9602125853a1a94f6155c5cac4f886507554c8324ee8'
+            '8b00041911e67654b0bd9602125853a1a94f6155c5cac4f886507554c8324ee8'
             'SKIP'
             '96c3639d9d193405f3e0db0c0be9f66dd9f01cfd24fde712572b9e31b29495d7'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
